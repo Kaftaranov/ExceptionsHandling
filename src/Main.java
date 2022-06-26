@@ -17,7 +17,6 @@ private static final String allowedSymbols = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefgh
             return false;
         }
             for (int i = 0; i < login.length(); i++) {
-               // for (int j = 0; j <= allowedSymbols.length();j++){//(allowedSymbols.charAt(j) == (login.charAt(i)))
                     if (!allowedSymbols.contains(login.substring(i,i+1))) {
                         System.out.println("Login should contain latin letters, numbers and underline symbols.");
                         return false;
