@@ -1,49 +1,55 @@
 public class Main {
-private static final int allowedLoginLength = 20;
-private static final int allowedPasswordLength = 19;
-private static final String allowedSymbols = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890_";
-    public static Boolean userCredentialsValidation(String login, String password, String confirmPassword)
-    throws WrongPasswordException, WrongLoginException
-    {
-        if (login.length() > allowedLoginLength) {
-            throw new WrongLoginException();
-        }
-        if (!password.equals(confirmPassword)) {
-            throw new WrongPasswordException ();
-        }
-        if (password.length() > allowedPasswordLength){
-            System.out.println("Maximum length of password is " + allowedPasswordLength + " symbols.");
-            System.out.println("Length of your password is " + password.length() + " symbols.");
+    private static final int allowedLoginLength = 20;
+    private static final int allowedPasswordLength = 19;
+    private static final String allowedSymbols = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890_";
+    private static final String login = "LoginToMyProgram_987";
+    private static final String password = "PasswordToMyProgram";
+    private static final String confirmPassword = "PasswordToMyProgram";
+
+    public static boolean validationSuccessful() {
+        try {
+            userCredentialsValidation(login, password, confirmPassword);
+        }catch (WrongLoginException loginException){
+            System.out.println(loginException.getMessage());
+            return  false;
+        }catch (WrongPasswordException passwordException){
+            System.out.println(passwordException.getMessage());
             return false;
         }
-            for (int i = 0; i < login.length(); i++) {
-                    if (!allowedSymbols.contains(login.substring(i,i+1))) {
-                        System.out.println("Login should contain latin letters, numbers and underline symbols.");
-                        return false;
-                    }
-                }
+    return true;
+    }
 
-            return true;
+    private static void userCredentialsValidation(String login, String password, String confirmPassword)
+            throws WrongPasswordException, WrongLoginException {
+        if (login.length() > allowedLoginLength) {
+            throw new WrongLoginException("Maximum length of login is " + allowedLoginLength + " symbols. " +
+                    "Length of your login is " + login.length() + " symbols.");
+        }
+        for (int i = 0; i < login.length(); i++) {
+            if (!allowedSymbols.contains(String.valueOf(login.charAt(i)))) {
+                throw new WrongLoginException("Login should contain latin letters, numbers and underline symbols.");
+            }
+        }
+        if (password.length() > allowedPasswordLength) {
+            throw new WrongPasswordException("Maximum length of password is " + allowedPasswordLength + " symbols. " +
+                    "Length of your login is " + password.length() + " symbols.");
+        }
+        for (int i = 0; i < password.length(); i++) {
+            if (!allowedSymbols.contains(String.valueOf(password.charAt(i)))) {
+                throw new WrongPasswordException("Password should contain latin letters, numbers and underline symbols.");
+            }
+        }
+        if (!password.equals(confirmPassword)) {
+            throw new WrongPasswordException("Passwords are not equal!");
+        }
     }
 
     public static void main(String[] args) {
-        String login = "LoginToMyProgram_98";
-        String password = "PasswordToMyProgram";
-        String confirmPassword = "PasswordToMyProgram";
-    try{
-       if (userCredentialsValidation(login, password, confirmPassword)) {
-           System.out.println("User credentials validation successful.");
-       }
+        if (validationSuccessful()) {
+            System.out.println("Validation complete.");
+        }else {
+            System.out.println("Validation failed. Please check your credentials.");
+        }
+    }
 
-    } catch (WrongLoginException e){
-        System.out.println("Maximum length of login is " + allowedLoginLength + " symbols.");
-        System.out.println("Length of your login is " + login.length() + " symbols.");
-
-    } catch (WrongPasswordException e) {
-        System.out.println("Passwords are not equal!");
-    }
-    finally {
-        System.out.println("User credentials validation complete.");
-    }
-    }
 }

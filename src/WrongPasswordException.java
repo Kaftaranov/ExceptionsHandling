@@ -3,4 +3,5 @@ public class WrongPasswordException extends IOException {
     public WrongPasswordException() {
         super();
     }
+    public WrongPasswordException(String s) {super(s);}
 }
